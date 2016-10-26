@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour {
 		if (other.gameObject.CompareTag ("obstacle")) {
 			score--;
 			setScore ();
+			gameObject.FindWithTag ("explosion").SetActive (true);
 			if (score < 0) {
 				winText.text="Fail!!";
 			}
