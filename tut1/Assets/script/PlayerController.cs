@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour {
 
@@ -32,19 +34,22 @@ public class PlayerController : MonoBehaviour {
 		// grab movement
 		float moveHorizontal = Input.GetAxis ("Horizontal")*2f;
 		//float moveVertical = Input.GetAxis("Vertical");
-		// constant move forward;
+		// constantly move forward;
 		float moveVertical = 1f;
 
-		// apply movement
+		/*****************************
+		 * Keyboard Movement
+		 * ***************************/
+		// apply movement with drag
 		//Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-		// with drag
 		//rb.AddForce (movement*speed);
-
 		// without drag
 		//rb.velocity = new Vector3(moveHorizontal, 0.0f, moveVertical)*speed;
 
-		// Mobile move
-		transform.Translate(Input.acceleration.x, 0, moveVertical);
+		/*****************************
+		 * Mobile gyro Movement
+		 * ***************************/
+		transform.Translate(Input.acceleration.x*2.5f, 0, moveVertical);
 	}
 
 	void OnTriggerEnter(Collider other){
@@ -67,6 +72,11 @@ public class PlayerController : MonoBehaviour {
 				winText.text="Fail!!";
 				// Gameoverscreen.SetActive (true);
 			}
+		}
+		if (other.gameObject.CompareTag ("finish")) {
+			//Time.timeScale = 0;
+			Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
+			winText.text="FINISHLINE!!";
 		}
 	}
 	void setScore(){
