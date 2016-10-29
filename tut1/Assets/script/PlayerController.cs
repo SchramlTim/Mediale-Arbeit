@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour {
 	private int score;
 	public Text scoreText;
 	public Text winText;
+	private ParticleSystem explosion;
+	private GameObject explosionContainer;
+
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +19,9 @@ public class PlayerController : MonoBehaviour {
 		score = 0;
 		setScore ();
 		winText.text="";
+		explosion = this.gameObject.transform.GetChild(0).GetChild(0).gameObject.GetComponent<ParticleSystem>();
+		explosionContainer = GameObject.Find ("explosionContainer");
+		explosionContainer.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -30,12 +36,15 @@ public class PlayerController : MonoBehaviour {
 		float moveVertical = 1f;
 
 		// apply movement
-		Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+		//Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 		// with drag
 		//rb.AddForce (movement*speed);
 
 		// without drag
-		rb.velocity = new Vector3(moveHorizontal, 0.0f, moveVertical)*speed;
+		//rb.velocity = new Vector3(moveHorizontal, 0.0f, moveVertical)*speed;
+
+		// Mobile move
+		transform.Translate(Input.acceleration.x, 0, moveVertical);
 	}
 
 	void OnTriggerEnter(Collider other){
@@ -50,9 +59,13 @@ public class PlayerController : MonoBehaviour {
 		if (other.gameObject.CompareTag ("obstacle")) {
 			score--;
 			setScore ();
-			gameObject.FindWithTag ("explosion").SetActive (true);
+			//explosion.SetActive (true);
+			explosionContainer.SetActive (true);
+			explosion.Stop();
+			explosion.Play();
 			if (score < 0) {
 				winText.text="Fail!!";
+				// Gameoverscreen.SetActive (true);
 			}
 		}
 	}
