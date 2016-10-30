@@ -7,8 +7,10 @@ TagManager:
   - Fire
   - obstacle
   - explosion
-  - item
+  - fuel
   - finish
+  - inverse
+  - item
   layers:
   - Default
   - TransparentFX
