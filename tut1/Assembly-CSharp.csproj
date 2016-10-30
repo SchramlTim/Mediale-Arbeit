@@ -46,10 +46,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\script\PlayerController.cs" />
-     <Compile Include="Assets\script\buttonController.cs" />
+     <Compile Include="Assets\script\cameraAction.cs" />
      <Compile Include="Assets\script\cameraController.cs" />
      <Compile Include="Assets\script\fuelController.cs" />
      <Compile Include="Assets\script\rotate.cs" />
+     <Compile Include="Assets\script\sceneController.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
