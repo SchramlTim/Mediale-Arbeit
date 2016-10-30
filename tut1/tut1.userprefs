@@ -4,7 +4,7 @@
     <Files>
       <File FileName="Assets\script\cameraController.cs" Line="1" Column="1" />
       <File FileName="Assets\script\rotate.cs" Line="1" Column="1" />
-      <File FileName="Assets\script\PlayerController.cs" Line="50" Column="3" />
+      <File FileName="Assets\script\PlayerController.cs" Line="57" Column="18" />
       <File FileName="Assets\script\fuelController.cs" Line="1" Column="1" />
       <File FileName="Assets\script\sceneController.cs" Line="1" Column="1" />
       <File FileName="Assets\script\cameraAction.cs" Line="1" Column="1" />

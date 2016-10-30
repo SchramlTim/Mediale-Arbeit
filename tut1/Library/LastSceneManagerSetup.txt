@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scenes/Lvl screens.unity
+- path: Assets/scenes/Hub.unity
   isLoaded: 1
   isActive: 1
