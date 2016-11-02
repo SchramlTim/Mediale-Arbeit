@@ -11,9 +11,11 @@ public class PlayerController : MonoBehaviour {
 	public float speed;
 	private Rigidbody rb;
 	private double score;
+    private float highscore;
 	public Text scoreText;
 	public Text statusText;
 	public Text winText;
+    public Text highscoreText;
 	private ParticleSystem explosion;
 	private GameObject explosionContainer;
 	private GameObject btnContainer;
@@ -30,7 +32,9 @@ public class PlayerController : MonoBehaviour {
 		rb = GetComponent<Rigidbody>();
 		fuelCont = GetComponent<fuelController>();
 		score = 0;
-		setScore ();
+        highscore = 0;
+        highscoreText.text = "Highscore: " + PlayerPrefs.GetFloat("Highscore");
+        setScore ();
 		winText.text="";
 		scoreText.text = "KM: 0";
 		statusText.text = "All OK";
@@ -43,8 +47,13 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//calcScore ();
-	}
+      if (highscore < score)
+        {
+            highscore = (float) score;
+            PlayerPrefs.SetFloat("Highscore", highscore);
+        }
+        calcScore ();
+    }
 	void FixedUpdate(){
 		/*****************************
 		 * Keyboard Movement
@@ -70,12 +79,12 @@ public class PlayerController : MonoBehaviour {
 		if (other.gameObject.CompareTag ("fuel")) {
 			other.gameObject.SetActive (false);
 			setScore ();
-			fuelCont.incFuel ();
+            fuelCont.incFuel ();
 			score++;
 		}
 		if (other.gameObject.CompareTag ("obstacle")) {
 			setScore ();
-			fuelCont.decFuel ();
+            fuelCont.decFuel ();
 			explosionContainer.SetActive (true);
 			explosion.Stop();
 			explosion.Play();
@@ -104,7 +113,7 @@ public class PlayerController : MonoBehaviour {
 	void calcScore(){
 		score = System.Math.Round(transform.position.z, 2);
 		setScore ();
-		if (score >= unlock) {
+        if (score >= unlock) {
 			winText.text="Congratulations unlocked new area!!";
 		}
 	}
