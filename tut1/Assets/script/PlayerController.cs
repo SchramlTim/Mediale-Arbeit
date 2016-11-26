@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
 		fuelCont = GetComponent<fuelController>();
 		score = 0;
         highscore = 0;
-        highscoreText.text = "Highscore: " + PlayerPrefs.GetFloat("Highscore");
+        //highscoreText.text = "Highscore: " + PlayerPrefs.GetFloat("Highscore");
         setScore ();
 		winText.text="";
 		scoreText.text = "KM: 0";
