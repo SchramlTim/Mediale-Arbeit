@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
-	public float speed;
+	public float speedVertical;
 	private Rigidbody rb;
 	private double score;
     private float highscore;
@@ -20,8 +20,9 @@ public class PlayerController : MonoBehaviour {
 	private GameObject explosionContainer;
 	private GameObject btnContainer;
 	public float moveVertical = 1f;
+	public float speedHorizontal = 1f;
 	public float unlock = 2000f;
-	public fuelController fuelCont;
+	public FuelController fuelCont;
 	private int inv = 1;
 	float moveHorizontal;
 	public float gyroSensitivity = 2.5f;
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
-		fuelCont = GetComponent<fuelController>();
+		fuelCont = GetComponent<FuelController>();
 		score = 0;
         highscore = 0;
         //highscoreText.text = "Highscore: " + PlayerPrefs.GetFloat("Highscore");
@@ -62,9 +63,9 @@ public class PlayerController : MonoBehaviour {
 		//Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 		//rb.AddForce (movement*speed);
 		// grab movement
-		moveHorizontal = (Input.GetAxis ("Horizontal") * 2f * inv);
+		moveHorizontal = (Input.GetAxis ("Horizontal") * 2f * inv * speedHorizontal);
 		// without drag
-		rb.velocity = new Vector3 (moveHorizontal, 0.0f, moveVertical) * speed;
+		rb.velocity = new Vector3 (moveHorizontal, 0.0f, moveVertical) * speedVertical;
 
 		/*****************************
 		 * Mobile gyro Movement
@@ -84,7 +85,7 @@ public class PlayerController : MonoBehaviour {
 		}
 		if (other.gameObject.CompareTag ("obstacle")) {
 			setScore ();
-            fuelCont.decFuel ();
+            //fuelCont.decFuel ();
 			explosionContainer.SetActive (true);
 			explosion.Stop();
 			explosion.Play();
@@ -93,6 +94,7 @@ public class PlayerController : MonoBehaviour {
 				winText.text="Fail!!";
 				// Gameoverscreen.SetActive (true);
 			}
+			stopMove ();
 		}
 		if (other.gameObject.CompareTag ("finish")) {
 			//Time.timeScale = 0;
@@ -114,7 +116,7 @@ public class PlayerController : MonoBehaviour {
 		score = System.Math.Round(transform.position.z, 2);
 		setScore ();
         if (score >= unlock) {
-			winText.text="Congratulations unlocked new area!!";
+			//winText.text="Congratulations unlocked new area!!";
 		}
 	}
 
@@ -123,7 +125,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void stopMove(){
-		moveVertical = 0f;
+		speedVertical = 0f;
+		speedHorizontal = 0f;
 		winText.text="No Fuel!!";
 		btnContainer.SetActive (true);
 	}

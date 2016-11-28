@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class fuelController : MonoBehaviour {
+public class FuelController : MonoBehaviour {
 	public float maxFuel = 100f;
 	public float currFuel = 0f;
 	public float fuelConsumption = 10f;
@@ -31,8 +31,9 @@ public class fuelController : MonoBehaviour {
 			setFuelBar (percentage);
 		}
 	}
+
 	public void incFuel(){
-		currFuel += fuelBonus;
+		currFuel += (currFuel + fuelBonus) >= maxFuel ? Mathf.Abs(currFuel - maxFuel) : fuelBonus;
 	}
 	public void decFuel(){
 		currFuel -= fuelConsumption;

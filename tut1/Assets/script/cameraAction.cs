@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class cameraAction : MonoBehaviour {
+public class CameraAction : MonoBehaviour {
 	int count = 0;
 	// Use this for initialization
 	void Start () {

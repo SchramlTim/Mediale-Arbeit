@@ -30,16 +30,16 @@ public class EndlessTerrain : MonoBehaviour {
 		xDestructionThreshold = chunksVisibleInViewDst - 1;
 		yDestructionThreshold = 2;
 		//Distanz, Obstaclerate (Zero/One), Itemrate (Rest Whitespace), [Fuel, Shield, Reverse] --> Immer 100%  
-		gameLevel.Add (new GameLevel (0,0,6,80,10,10));
-		gameLevel.Add (new GameLevel (10,5,7,80,10,10));
-		gameLevel.Add (new GameLevel (200,10,8,80,10,10));
-		gameLevel.Add (new GameLevel (300,10,9,80,10,10));
-		gameLevel.Add (new GameLevel (400,10,12,80,10,10));
-		gameLevel.Add (new GameLevel (500,10,14,80,10,10));
-		gameLevel.Add (new GameLevel (600,10,16,80,10,10));
-		gameLevel.Add (new GameLevel (700,10,18,80,10,10));
-		gameLevel.Add (new GameLevel (800,10,20,80,10,10));
-		gameLevel.Add (new GameLevel (900,10,22,80,10,10));
+		gameLevel.Add (new GameLevel (0,0,1,100,0,0));
+		gameLevel.Add (new GameLevel (10,1,1,90,5,5));
+		gameLevel.Add (new GameLevel (200,2,1,90,5,5));
+		gameLevel.Add (new GameLevel (600,3,1,80,10,10));
+		gameLevel.Add (new GameLevel (800,5,2,80,10,10));
+		gameLevel.Add (new GameLevel (1000,6,2,70,15,15));
+		gameLevel.Add (new GameLevel (1400,8,3,70,15,15));
+		gameLevel.Add (new GameLevel (1800,10,3,70,12,18));
+		gameLevel.Add (new GameLevel (2500,12,3,70,10,20));
+		gameLevel.Add (new GameLevel (3000,14,4,70,10,20));
 		currentGameLevel = null;
 	}
 
@@ -48,9 +48,10 @@ public class EndlessTerrain : MonoBehaviour {
 		viewerPosition = new Vector2 (viewer.position.x, viewer.position.z);
 		//Debug.Log (terrainChunkDictionary.Count);
 		//Level up
-		if(isCheckpoint(viewerPosition.y) & viewerPosition.y > 10 & offsetObjectrate <= 40){			
-			offsetObjectrate += 2;
+		if(isCheckpoint(viewerPosition.y) & viewerPosition.y >= 0){			
+			//player.speedVertical += 10;
 		}
+		//Debug.Log(currentGameLevel.GetDistance () + "  -  " + (currentGameLevel.GetObjectRate()+offsetObjectrate));
 		UpdateVisibleChunks ();
 	}
 
@@ -73,7 +74,6 @@ public class EndlessTerrain : MonoBehaviour {
 
 				//Check if Chunk already exist according to chunkcoord
 				if (terrainChunkDictionary.ContainsKey (viewedChunkCoord)) {
-
 					if((viewedChunkCoord.y < currentChunkCoordY - yDestructionThreshold) || ((viewedChunkCoord.x < currentChunkCoordX - xDestructionThreshold)) || ((viewedChunkCoord.x > currentChunkCoordX + xDestructionThreshold))) {						
 						terrainChunkDictionary [viewedChunkCoord].destroyChunk ();
 						terrainChunkDictionary.Remove (viewedChunkCoord);
@@ -118,12 +118,14 @@ public class EndlessTerrain : MonoBehaviour {
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				int percentageObjectrate = Random.Range (0, 100);
+				float heightOffset = 1;
 				if (percentageObjectrate < (currentGameLevel.GetObjectRate() + offsetObjectrate)) {
 					if (Random.Range (0, 2) > 0) {
 						item = GameObject.Instantiate (obsticalOne);
 					} else {
 						item = GameObject.Instantiate (obsticalZero);
 					}
+					heightOffset = 0.5f;
 					int randomScale = Random.Range (0, 100);
 					randomScale = randomScale > 94 ? 10 : Mathf.RoundToInt(randomScale/2 / 10);
 					int randomRotationX = Random.Range (-45,45);
@@ -139,6 +141,7 @@ public class EndlessTerrain : MonoBehaviour {
 					//Spacerate sagt aus viel Prozent Items gespawnt werden
 					if (percentageSpace < currentGameLevel.GetSpaceRate()) {
 						int percentageItem = Random.Range (0, 100);
+						heightOffset = 1f;
 						if (percentageItem < currentGameLevel.GetFuelTo() & percentageItem >= currentGameLevel.GetFuelFrom() ) {
 							//fuel
 							item = GameObject.Instantiate (specialFuel);
@@ -162,7 +165,7 @@ public class EndlessTerrain : MonoBehaviour {
 					//Zufallpositionierung innerhalb eines "Minichunks"
 					int randomX = Random.Range (-miniChunkSize / 2, miniChunkSize / 2);
 					int randomZ = Random.Range (-miniChunkSize / 2, miniChunkSize / 2);
-					float heightOffset = (item.transform.localScale.y / 2) - 0.1f;
+
 					Vector3 pos = new Vector3 (planeCoord.x + (j * miniChunkSize) - randomX, heightOffset, planeCoord.z + (i * miniChunkSize) - randomZ);
 					item.transform.position = pos;
 					item.transform.parent = plane.transform;
@@ -188,6 +191,7 @@ public class TerrainChunk{
 		meshObject = komObject;
 		meshObject.transform.position = positionV3;
 		meshObject.transform.localScale = Vector3.one * size / 10f;
+		SetVisible (false);
 	}
 
 	public void UpdateTerrainChunk(){
