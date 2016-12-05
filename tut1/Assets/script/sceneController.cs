@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class sceneController : MonoBehaviour {
+	public Object lvl1;
+	public Object lvl2;
+	public Object lvl3;
 	//used in levels
 	public void returnToHub(){
 		SceneManager.LoadScene("Hub");
@@ -14,12 +17,15 @@ public class sceneController : MonoBehaviour {
 
 	// hubworld
 	public void loadLvl1(){
-		SceneManager.LoadScene("prototype");
+		SceneManager.LoadScene(lvl1.name);//("prototype");
+		Debug.Log("TEEEEEEEEEEEEEEEEEEEEEEEEEEST:" + lvl1.name);
 	}
 	public void loadLvl2(){
-		SceneManager.LoadScene("Lvl screens");
+		SceneManager.LoadScene(lvl2.name);
+		//SceneManager.LoadScene("Lvl screens");
 	}
 	public void loadLvl3(){
-		Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
+		SceneManager.LoadScene(lvl3.name);
+		//Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
 	}
 }

@@ -63,15 +63,15 @@ public class PlayerController : MonoBehaviour {
 		//Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 		//rb.AddForce (movement*speed);
 		// grab movement
-		moveHorizontal = (Input.GetAxis ("Horizontal") * 2f * inv * speedHorizontal);
+		//moveHorizontal = (Input.GetAxis ("Horizontal") * 2f * inv * speedHorizontal);
 		// without drag
-		rb.velocity = new Vector3 (moveHorizontal, 0.0f, moveVertical) * speedVertical;
+		//rb.velocity = new Vector3 (moveHorizontal, 0.0f, moveVertical) * speedVertical;
 
 		/*****************************
 		 * Mobile gyro Movement
 		 * ***************************/
-		//moveHorizontal = Input.acceleration.x * gyroSensitivity;
-		//transform.Translate(moveHorizontal * inv, 0, moveVertical);
+		moveHorizontal = Input.acceleration.x * gyroSensitivity;
+		transform.Translate(moveHorizontal * inv, 0, moveVertical);
 
 		calcScore ();
 	}

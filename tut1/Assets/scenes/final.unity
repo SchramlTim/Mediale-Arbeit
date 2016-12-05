@@ -3353,6 +3353,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1000012933399310, guid: 5575722bd116a094ea26af964b8e185b,
     type: 2}
   m_PrefabInternal: {fileID: 1615282679}
+--- !u!114 &300428186 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114000012909965276, guid: 5575722bd116a094ea26af964b8e185b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1615282679}
+  m_Script: {fileID: 11500000, guid: 9b59881d3e589b94d9a73f4cdb1e1018, type: 3}
 --- !u!4 &300428192 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000012973136192, guid: 5575722bd116a094ea26af964b8e185b,
@@ -4343,6 +4349,11 @@ Prefab:
     - target: {fileID: 4000010140665604, guid: 1b613f211c04e44409fd0dac8743e672, type: 2}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 9.866
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013935654500, guid: 1b613f211c04e44409fd0dac8743e672,
+        type: 2}
+      propertyPath: bloomThreshold
+      value: 1.62
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000014173444910, guid: 1b613f211c04e44409fd0dac8743e672, type: 2}
@@ -17791,6 +17802,11 @@ Prefab:
       propertyPath: speedVertical
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 114000013327036918, guid: 5575722bd116a094ea26af964b8e185b,
+        type: 2}
+      propertyPath: playerCont
+      value: 
+      objectReference: {fileID: 300428186}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5575722bd116a094ea26af964b8e185b, type: 2}
   m_IsPrefabParent: 0
