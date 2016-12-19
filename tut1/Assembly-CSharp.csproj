@@ -47,13 +47,11 @@
   <ItemGroup>
      <Compile Include="Assets\script\CameraAction.cs" />
      <Compile Include="Assets\script\CameraController.cs" />
-     <Compile Include="Assets\script\ChunkGenerator.cs" />
      <Compile Include="Assets\script\EndlessTerrain.cs" />
      <Compile Include="Assets\script\FuelController.cs" />
      <Compile Include="Assets\script\PlayerController.cs" />
      <Compile Include="Assets\script\rotate.cs" />
      <Compile Include="Assets\script\sceneController.cs" />
-     <Compile Include="Assets\script\test.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />

@@ -20,9 +20,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/SampleScenes/Scenes/CarAIWaypointBased.unity
   - enabled: 0
-    path: Assets/SampleScenes/Scenes/CharacterFirstPerson.unity
-  - enabled: 0
     path: Assets/SampleScenes/Scenes/CharacterThirdPersonAI.unity
+  - enabled: 0
+    path: Assets/SampleScenes/Scenes/CharacterFirstPerson.unity
   - enabled: 0
     path: Assets/SampleScenes/Scenes/CharacterThirdPerson.unity
   - enabled: 0
@@ -35,3 +35,5 @@ EditorBuildSettings:
     path: Assets/scenes/prototype.unity
   - enabled: 1
     path: Assets/scenes/Lvl screens.unity
+  - enabled: 1
+    path: Assets/scenes/final.unity

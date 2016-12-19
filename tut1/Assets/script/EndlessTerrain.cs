@@ -30,16 +30,7 @@ public class EndlessTerrain : MonoBehaviour {
 		xDestructionThreshold = chunksVisibleInViewDst - 1;
 		yDestructionThreshold = 2;
 		//Distanz, Obstaclerate (Zero/One), Itemrate (Rest Whitespace), [Fuel, Shield, Reverse] --> Immer 100%  
-		gameLevel.Add (new GameLevel (0,0,1,100,0,0));
-		gameLevel.Add (new GameLevel (10,1,1,90,5,5));
-		gameLevel.Add (new GameLevel (200,2,1,90,5,5));
-		gameLevel.Add (new GameLevel (600,3,1,80,10,10));
-		gameLevel.Add (new GameLevel (800,5,2,80,10,10));
-		gameLevel.Add (new GameLevel (1000,6,2,70,15,15));
-		gameLevel.Add (new GameLevel (1400,8,3,70,15,15));
-		gameLevel.Add (new GameLevel (1800,10,3,70,12,18));
-		gameLevel.Add (new GameLevel (2500,12,3,70,10,20));
-		gameLevel.Add (new GameLevel (3000,14,4,70,10,20));
+		initGameLevel();
 		currentGameLevel = null;
 	}
 
@@ -174,6 +165,24 @@ public class EndlessTerrain : MonoBehaviour {
 			}
 		}
 		return plane;
+	}
+
+	public void restGeneration(){
+
+	}
+
+	public void initGameLevel(){
+		gameLevel.Clear();
+		gameLevel.Add (new GameLevel (0,0,1,100,0,0));
+		gameLevel.Add (new GameLevel (10,1,1,90,5,5));
+		gameLevel.Add (new GameLevel (200,2,1,90,5,5));
+		gameLevel.Add (new GameLevel (600,3,1,80,10,10));
+		gameLevel.Add (new GameLevel (800,5,2,80,10,10));
+		gameLevel.Add (new GameLevel (1000,6,2,70,15,15));
+		gameLevel.Add (new GameLevel (1400,8,3,70,15,15));
+		gameLevel.Add (new GameLevel (1800,10,3,70,12,18));
+		gameLevel.Add (new GameLevel (2500,12,3,70,10,20));
+		gameLevel.Add (new GameLevel (3000,14,4,70,10,20));
 	}
 }
 

@@ -23,6 +23,13 @@ public class PlayerController : MonoBehaviour {
 	public float speedHorizontal = 1f;
 	public float unlock = 2000f;
 	public FuelController fuelCont;
+	public AudioClip deathSound;
+	public AudioClip endSound;
+	public AudioClip fuelPickSound;
+	public AudioClip coinSound;
+	public AudioClip ingameSound;
+	public GameObject MapGenerator;
+	private AudioSource effectSound;
 	private int inv = 1;
 	float moveHorizontal;
 	public float gyroSensitivity = 2.5f;
@@ -30,6 +37,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		effectSound = GetComponent<AudioSource> ();
 		rb = GetComponent<Rigidbody>();
 		fuelCont = GetComponent<FuelController>();
 		score = 0;
@@ -60,28 +68,30 @@ public class PlayerController : MonoBehaviour {
 		 * Keyboard Movement
 		 * ***************************/
 		// apply movement with drag
-		//Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-		//rb.AddForce (movement*speed);
+		Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+		rb.AddForce (movement*speedHorizontal);
 		// grab movement
-		//moveHorizontal = (Input.GetAxis ("Horizontal") * 2f * inv * speedHorizontal);
+		moveHorizontal = (Input.GetAxis ("Horizontal") * 2f * inv * speedHorizontal);
 		// without drag
-		//rb.velocity = new Vector3 (moveHorizontal, 0.0f, moveVertical) * speedVertical;
+		rb.velocity = new Vector3 (moveHorizontal, 0.0f, moveVertical) * speedVertical;
 
 		/*****************************
 		 * Mobile gyro Movement
 		 * ***************************/
-		moveHorizontal = Input.acceleration.x * gyroSensitivity;
-		transform.Translate(moveHorizontal * inv, 0, moveVertical);
-
+		//moveHorizontal = Input.acceleration.x * gyroSensitivity;
+		//transform.Translate(moveHorizontal * inv, 0, moveVertical);
 		calcScore ();
 	}
 
 	void OnTriggerEnter(Collider other)	{
+		Debug.Log (other.gameObject.tag);
 		if (other.gameObject.CompareTag ("fuel")) {
 			other.gameObject.SetActive (false);
 			setScore ();
             fuelCont.incFuel ();
 			score++;
+			MapGenerator.GetComponent<EndlessTerrain> ().resetLevel ();
+			effectSound.PlayOneShot (fuelPickSound);
 		}
 		if (other.gameObject.CompareTag ("obstacle")) {
 			setScore ();
@@ -92,8 +102,8 @@ public class PlayerController : MonoBehaviour {
 			score--;
 			if (score < 0) {
 				winText.text="Fail!!";
-				// Gameoverscreen.SetActive (true);
 			}
+			effectSound.PlayOneShot (deathSound);
 			stopMove ();
 		}
 		if (other.gameObject.CompareTag ("finish")) {
