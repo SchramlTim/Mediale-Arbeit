@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
 		rb = GetComponent<Rigidbody>();
 		fuelCont = GetComponent<fuelController>();
 		score = 0;
-        highscore = 0;
+        highscore = PlayerPrefs.GetFloat("Highscore");
         highscoreText.text = "Highscore: " + PlayerPrefs.GetFloat("Highscore");
         setScore ();
 		winText.text="";
