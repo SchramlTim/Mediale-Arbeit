@@ -225,7 +225,7 @@ public class TerrainChunk{
 	public void SetVisible(bool visible){
 
 		//Damit rotieren sie--> SetActive Bug?
-		Color currentColor;
+		/*Color currentColor;
 		if (visible) {			
 			float t = Time.time / Time.time + 5;
 			Color startColor = meshObject.GetComponent<MeshRenderer> ().material.color;
@@ -240,8 +240,8 @@ public class TerrainChunk{
 			currentColor = Color.Lerp (startColor, endColor, t); 
 		}
 
-		meshObject.GetComponent<MeshRenderer> ().material.SetColor("_Color", currentColor);    
-		//meshObject.SetActive (visible);
+		meshObject.GetComponent<MeshRenderer> ().material.SetColor("_Color", currentColor);*/    
+		meshObject.SetActive (visible);
 	}
 
 	public bool IsVisible(){
