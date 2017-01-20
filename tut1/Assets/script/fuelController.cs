@@ -19,16 +19,18 @@ public class FuelController : MonoBehaviour {
 	}
 
 	void consume(){
-		currFuel--;
-		float percentage = currFuel / maxFuel;
-		if (percentage <= 0.0f) {
-			playerCont.stopMove ();
-			setFuelBar (0f);
-		} else {
-			if (percentage > 1) {
-				percentage = 1;
+		if (playerCont.getPlayerLife().Equals(LifeCycle.ALIVE)) {			
+			currFuel--;
+			float percentage = currFuel / maxFuel;
+			if (percentage <= 0.0f) {
+				playerCont.stopMove ();
+				setFuelBar (0f);
+			} else {
+				if (percentage > 1) {
+					percentage = 1;
+				}
+				setFuelBar (percentage);
 			}
-			setFuelBar (percentage);
 		}
 	}
 

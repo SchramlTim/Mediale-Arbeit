@@ -11,6 +11,7 @@ TagManager:
   - finish
   - inverse
   - item
+  - shield
   layers:
   - Default
   - TransparentFX

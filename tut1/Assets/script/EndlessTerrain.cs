@@ -29,15 +29,13 @@ public class EndlessTerrain : MonoBehaviour {
 		chunksVisibleInViewDst = Mathf.RoundToInt (maxViewDst / chunkSize);
 		xDestructionThreshold = chunksVisibleInViewDst - 1;
 		yDestructionThreshold = 2;
-		//Distanz, Obstaclerate (Zero/One), Itemrate (Rest Whitespace), [Fuel, Shield, Reverse] --> Immer 100%  
+
 		initGameLevel();
-		currentGameLevel = null;
 	}
 
 	void Update(){
 		//Playerobject
 		viewerPosition = new Vector2 (viewer.position.x, viewer.position.z);
-		//Debug.Log (terrainChunkDictionary.Count);
 		//Level up
 		if(isCheckpoint(viewerPosition.y) & viewerPosition.y >= 0){			
 			//player.speedVertical += 10;
@@ -118,7 +116,7 @@ public class EndlessTerrain : MonoBehaviour {
 					}
 					heightOffset = 0.5f;
 					int randomScale = Random.Range (0, 100);
-					randomScale = randomScale > 94 ? 10 : Mathf.RoundToInt(randomScale/2 / 10);
+					randomScale = randomScale > 94 ? 10 : Mathf.CeilToInt(((randomScale/2) / 10) + 0.1f);
 					int randomRotationX = Random.Range (-45,45);
 					int randomRotationY = Random.Range (-90,90);
 					int randomRotationZ = Random.Range (-45,45);
@@ -135,16 +133,15 @@ public class EndlessTerrain : MonoBehaviour {
 						heightOffset = 1f;
 						if (percentageItem < currentGameLevel.GetFuelTo() & percentageItem >= currentGameLevel.GetFuelFrom() ) {
 							//fuel
-							item = GameObject.Instantiate (specialFuel);
+							item = GameObject.Instantiate (specialFuel) as GameObject;
 							item.transform.position = new Vector3 (item.transform.position.x, 1, item.transform.position.z);
 						} else if (percentageItem > currentGameLevel.GetShieldFrom() & percentageItem < currentGameLevel.GetShieldTo()) {
 							//shield
-							item = GameObject.Instantiate (specialShield);
+							item = GameObject.Instantiate (specialShield) as GameObject;
 							item.transform.position = new Vector3 (item.transform.position.x, 1, item.transform.position.z);
 						} else if (percentageItem > currentGameLevel.GetReverseFrom() & percentageItem < currentGameLevel.GetReverseTo()) {
 							//reverse
-							item = GameObject.Instantiate (specialReverse);
-							item.transform.position = new Vector3 (item.transform.position.x, 1, item.transform.position.z);
+							item = GameObject.Instantiate (specialReverse) as GameObject;
 						} else {
 							item = null;
 						}
@@ -168,11 +165,25 @@ public class EndlessTerrain : MonoBehaviour {
 	}
 
 	public void restGeneration(){
-
+		initGameLevel();
 	}
 
 	public void initGameLevel(){
 		gameLevel.Clear();
+		//Distanz, Obstaclerate (Zero/One), Itemrate (Rest Whitespace), [Fuel, Shield, Reverse] --> Immer 100%  
+		/*
+		gameLevel.Add (new GameLevel (0,0,0,100,0,0));
+		gameLevel.Add (new GameLevel (10,1,0,90,5,5));
+		gameLevel.Add (new GameLevel (200,2,0,90,5,5));
+		gameLevel.Add (new GameLevel (600,3,0,80,10,10));
+		gameLevel.Add (new GameLevel (800,5,0,80,10,10));
+		gameLevel.Add (new GameLevel (1000,6,0,70,15,15));
+		gameLevel.Add (new GameLevel (1400,8,0,70,15,15));
+		gameLevel.Add (new GameLevel (1800,10,0,70,12,18));
+		gameLevel.Add (new GameLevel (2500,12,0,70,10,20));
+		gameLevel.Add (new GameLevel (3000,14,0,70,10,20));
+		*/
+
 		gameLevel.Add (new GameLevel (0,0,1,100,0,0));
 		gameLevel.Add (new GameLevel (10,1,1,90,5,5));
 		gameLevel.Add (new GameLevel (200,2,1,90,5,5));
@@ -183,6 +194,8 @@ public class EndlessTerrain : MonoBehaviour {
 		gameLevel.Add (new GameLevel (1800,10,3,70,12,18));
 		gameLevel.Add (new GameLevel (2500,12,3,70,10,20));
 		gameLevel.Add (new GameLevel (3000,14,4,70,10,20));
+
+		currentGameLevel = null;
 	}
 }
 
@@ -210,7 +223,25 @@ public class TerrainChunk{
 	}
 
 	public void SetVisible(bool visible){
-		meshObject.SetActive (visible);
+
+		//Damit rotieren sie--> SetActive Bug?
+		Color currentColor;
+		if (visible) {			
+			float t = Time.time / Time.time + 5;
+			Color startColor = meshObject.GetComponent<MeshRenderer> ().material.color;
+			meshObject.GetComponent<MeshRenderer> ().material.color = new Color (startColor.r, startColor.g, startColor.b, 0.0f);
+			Color endColor = new Color (startColor.r, startColor.g, startColor.b, 1.0f);
+			currentColor = Color.Lerp (startColor, endColor, t);   
+		} else {
+			float t = Time.time / Time.time + 5;
+			Color startColor = meshObject.GetComponent<MeshRenderer> ().material.color;
+			meshObject.GetComponent<MeshRenderer> ().material.color = new Color (startColor.r, startColor.g, startColor.b, 1.0f);
+			Color endColor = new Color (startColor.r, startColor.g, startColor.b, 0.0f);
+			currentColor = Color.Lerp (startColor, endColor, t); 
+		}
+
+		meshObject.GetComponent<MeshRenderer> ().material.SetColor("_Color", currentColor);    
+		//meshObject.SetActive (visible);
 	}
 
 	public bool IsVisible(){

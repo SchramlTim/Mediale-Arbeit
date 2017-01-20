@@ -11,7 +11,8 @@ public class sceneController : MonoBehaviour {
 		SceneManager.LoadScene("Hub");
 	}
 	public void restartGame(){
-		Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
+		Scene scene = SceneManager.GetActiveScene(); 
+		SceneManager.LoadScene(scene.name, LoadSceneMode.Single);
 	}
 
 
